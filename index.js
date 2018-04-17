@@ -209,5 +209,5 @@ app.post("/users", (req, res) => {
 
 
 app.listen(8001, () => {
-    console.log("SERVER IS RUNNING");
+    console.log("SERVER IS RUNNING on port 8001");
 });
