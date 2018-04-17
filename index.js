@@ -10,7 +10,7 @@ const jwt = require('jsonwebtoken');
 const Blog = require("./models/blog");
 const User = require("./models/user");
 
-mongoose.connect("mongodb://user:user@ds215208.mlab.com:15208/blogauth");
+mongoose.connect("mongodb://localhost/blogauth");
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 app.use(cors());
@@ -208,6 +208,6 @@ app.post("/users", (req, res) => {
 });
 
 
-app.listen(process.env.PORT, process.env.IP, function(){
+app.listen(8001, () => {
     console.log("SERVER IS RUNNING");
 });
