@@ -10,7 +10,7 @@ const jwt = require('jsonwebtoken');
 const Blog = require("./models/blog");
 const User = require("./models/user");
 
-mongoose.connect("mongodb://localhost/blogauth");
+mongoose.connect("mongodb://localhost/blogWithAngular");
 app.use(bodyParser.urlencoded({extended: true}));
 app.use(bodyParser.json());
 app.use(cors());
