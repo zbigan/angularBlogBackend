@@ -11,6 +11,6 @@ app.use(cors());
 app.use('/', routes);
 app.use('/', routesProtected);
 
-app.listen(config.port, () => {
+app.listen(config.port, config.ip, () => {
     console.log("SERVER IS RUNNING on port " + config.port);
 });
