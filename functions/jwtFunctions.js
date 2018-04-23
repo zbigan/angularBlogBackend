@@ -15,15 +15,15 @@ const jwtMiddleware = (req, res, next) => {
       const token = authArray[1];
       jwt.verify(token, serverJWT_Secret, (err, decoded) => {
         if(err) {
-            res.status(403).json("some shit failed to verify");
+            res.sendStatus(401);
 
         } else {
-          req.decoded = decoded;
+          console.log(decoded);
           next();
         }
       });
     } else {
-        res.status(403).json("some shit no header");
+        res.status(403).send("No token in header");
     }
   };
 
