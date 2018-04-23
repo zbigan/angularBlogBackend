@@ -1,9 +1,9 @@
 const express = require("express");
 const router = express.Router()
 
-const jwtFunctions = require("./jwtFunctions");
-const mongooseFunctions = require("./mongoose-functions");
-const loginLogic = require("./login-logic");
+const jwtFunctions = require("./functions/jwtFunctions");
+const mongooseFunctions = require("./functions/mongoose-functions");
+const loginLogic = require("./functions/login-logic");
 
 
 router.post('/login', jwtFunctions.validatePayloadMiddleware, loginLogic.authentication);

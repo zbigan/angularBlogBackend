@@ -1,10 +1,11 @@
-const User = require("./models/user");
+const User = require("../models/user");
 const mongoose = require("mongoose");
-const jwt = require('jsonwebtoken');
+const jwt = require("jsonwebtoken");
+const config = require("../config");
 
-mongoose.connect("mongodb://localhost/blogWithAngular");
+mongoose.connect(config.databaseUrl);
 
-const serverJWT_Secret = 'kpTxN=)7mX3W3SEJ58Ubt8-';
+const serverJWT_Secret = config.jwtSecret;
 
 const authentication = (req, res) => {
     User.findOne({ email: req.body.email }, (err, user) => {

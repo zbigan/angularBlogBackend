@@ -1,8 +1,9 @@
-const Blog = require("./models/blog");
-const User = require("./models/user");
+const Blog = require("../models/blog");
+const User = require("../models/user");
+const config = require("../config");
 
 const mongoose = require("mongoose");
-mongoose.connect("mongodb://localhost/blogWithAngular");
+mongoose.connect(config.databaseUrl);
 
 //INDEX ROUTE
 const showBlogs = (req, res) => {

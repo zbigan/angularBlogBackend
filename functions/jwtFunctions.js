@@ -1,6 +1,7 @@
 const jwt = require('jsonwebtoken');
+const config = require("../config");
 
-const serverJWT_Secret = 'kpTxN=)7mX3W3SEJ58Ubt8-';
+const serverJWT_Secret = config.jwtSecret;
 
 const jwtMiddleware = (req, res, next) => {
     /**
