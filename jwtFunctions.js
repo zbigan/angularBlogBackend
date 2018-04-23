@@ -1,6 +1,5 @@
-/**
- * Secret Encryption Key
- */
+const jwt = require('jsonwebtoken');
+
 const serverJWT_Secret = 'kpTxN=)7mX3W3SEJ58Ubt8-';
 
 const jwtMiddleware = (req, res, next) => {
