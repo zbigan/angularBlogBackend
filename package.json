@@ -17,6 +17,8 @@
     "express": "^4.16.3",
     "express-sanitizer": "^1.0.3",
     "fs": "0.0.1-security",
+    "joi": "^13.2.0",
+    "joigoose": "^4.0.0",
     "jsonwebtoken": "^8.2.0",
     "method-override": "^2.3.10",
     "mongoose": "^5.0.10"
