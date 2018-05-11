@@ -1,17 +1,17 @@
 const express = require("express");
 const router = express.Router()
-
-const jwtFunctions = require("../functions/jwtFunctions");
+const jwtFunctions = require("../functions/jwt-functions");
 const blogController = require("../controllers/blog-controller");
 const loginLogic = require("../functions/login-logic");
+const { validateParam, schemas } = require("../validation/joi-validation");
 
 
 // router.use(jwtFunctions.jwtMiddleware);
 
 router.route("/detail/:id")
-    .get(blogController.showBlog)
-    .put(blogController.updateBlog)
-    .delete(blogController.deleteBlog);
+    .get(validateParam(schemas.joiBlogIdSchema, "id"), blogController.showBlog)
+    .put(validateParam(schemas.joiBlogIdSchema, "id"), blogController.updateBlog)
+    .delete(validateParam(schemas.joiBlogIdSchema, "id"), blogController.deleteBlog);
 
 router.route("/blogs")
     .get(blogController.showBlogs)
@@ -26,21 +26,4 @@ router.route("/users")
     .post(blogController.createUser);
 
 
-/////////////////////////////////////////
-/////////////////////////////////////////
-// router.route("/users/:name")
-//     .get(validateParam( schemas.joiNameSchema, "name" ), 
-//         (req, res) => {
-//             const {userName} = req.value.params;
-//             // console.log(req.params.name);
-//             User.findOne({"name": req.value.params.name}, (err, user) => {
-//                 if(err){
-//                     console.log("ERROR");
-//                 } else{
-//                     res.status(200).send(user);
-//                 }
-//         });
-//     });
-////////////////////////////////////////
-////////////////////////////////////////
 module.exports = router

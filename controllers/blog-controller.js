@@ -21,7 +21,7 @@ module.exports = {
     showBlog: async (req, res, next) => {
         try{
             // const id = req.params.id; //Tas pats kaip:
-            const { id } = req.params;
+            const { id } = req.value.params;
             const blog = await Blog.findById(id);
             res.status(200).json(blog);
         } catch(err){
