@@ -25,7 +25,7 @@ module.exports = {
         }  
     },
 
-    authenticate: async (req, res, next) => {
+    authenticateUser: async (req, res, next) => {
         try {
             const password = req.body.password;
             const email = req.body.email;

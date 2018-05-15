@@ -1,20 +1,18 @@
 const express = require("express");
 const router = express.Router()
-const userController = require("../controllers/user-controller");
+const { createUser, authenticateUser } = require("../controllers/user-controller");
 const { validateBody, schemas } = require("../validation/joi-validation");
-const { validatePayloadMiddleware } = require("../functions/jwt-functions");
 
 
 router.route("/users")
     .post(
         validateBody(schemas.joiUserSchema), 
-        userController.createUser
+        createUser
     );
 
 router.route("/login")
     .post(
-        validatePayloadMiddleware, 
-        userController.authenticate
+        authenticateUser
     );
 
 

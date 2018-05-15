@@ -1,7 +1,7 @@
 const express = require("express");
 const router = express.Router()
 const blogController = require("../controllers/blog-controller");
-const { validatePayloadMiddleware, jwtMiddleware } = require("../functions/jwt-functions");
+const { jwtMiddleware } = require("../functions/jwt-token-verification");
 const { validateParam, validateBody, schemas } = require("../validation/joi-validation");
 
 
