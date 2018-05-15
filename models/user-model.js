@@ -1,10 +1,6 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
-const bcrypt = require("bcrypt");
-const SALT_WORK_FACTOR = 10;
-const passwordFunctions = require("../functions/user-password-functions");
-const joim = require("joigoose")(mongoose);
-const joi = require("joi");
+// const passwordFunctions = require("../functions/user-password-functions");
 
 const UserSchema = new Schema({
     name: String,
@@ -16,7 +12,8 @@ const UserSchema = new Schema({
     }]
 });
 
-UserSchema.pre("save", passwordFunctions.hashPassword);
-UserSchema.methods.comparePassword = passwordFunctions.comparePassword;
+// UserSchema.pre("save", passwordFunctions.hashPassword);
+
+// UserSchema.methods.comparePassword = passwordFunctions.comparePassword;
 
 module.exports = mongoose.model("User", UserSchema);

@@ -1,29 +1,37 @@
 const express = require("express");
 const router = express.Router()
-const jwtFunctions = require("../functions/jwt-functions");
 const blogController = require("../controllers/blog-controller");
-const loginLogic = require("../functions/login-logic");
-const { validateParam, schemas } = require("../validation/joi-validation");
+const { validatePayloadMiddleware, jwtMiddleware } = require("../functions/jwt-functions");
+const { validateParam, validateBody, schemas } = require("../validation/joi-validation");
 
-
-// router.use(jwtFunctions.jwtMiddleware);
-
-router.route("/detail/:id")
-    .get(validateParam(schemas.joiBlogIdSchema, "id"), blogController.showBlog)
-    .put(validateParam(schemas.joiBlogIdSchema, "id"), blogController.updateBlog)
-    .delete(validateParam(schemas.joiBlogIdSchema, "id"), blogController.deleteBlog);
 
 router.route("/blogs")
     .get(blogController.showBlogs)
-    .post(blogController.createBlog);
+    .post(
+        jwtMiddleware, 
+        validateBody(schemas.joiBlogSchema), 
+        blogController.createBlog
+    );
 
-//LOGIN ROUTE
-router.route("/login")
-    .post(jwtFunctions.validatePayloadMiddleware, loginLogic.authentication);
+router.route("/blogs/:id")
+    .get(
+        jwtMiddleware,
+        validateParam(schemas.joiIdSchema, "id"), 
+        blogController.showBlog
+    )
+    .put(
+        jwtMiddleware,
+        [
+            validateParam(schemas.joiIdSchema, "id"),
+            validateBody(schemas.joiBlogSchema) 
+        ], 
+        blogController.updateBlog
+    )
+    .delete(
+        jwtMiddleware, 
+        validateParam(schemas.joiIdSchema, "id"), 
+        blogController.deleteBlog
+    );
 
-//NEW USER
-router.route("/users")
-    .post(blogController.createUser);
 
-
-module.exports = router
+module.exports = router;
