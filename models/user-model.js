@@ -1,6 +1,6 @@
 const mongoose = require("mongoose");
 const Schema = mongoose.Schema;
-// const passwordFunctions = require("../functions/user-password-functions");
+
 
 const UserSchema = new Schema({
     name: String,
@@ -11,9 +11,5 @@ const UserSchema = new Schema({
         ref: "blog"
     }]
 });
-
-// UserSchema.pre("save", passwordFunctions.hashPassword);
-
-// UserSchema.methods.comparePassword = passwordFunctions.comparePassword;
 
 module.exports = mongoose.model("User", UserSchema);
