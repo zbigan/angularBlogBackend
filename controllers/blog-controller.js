@@ -56,10 +56,8 @@ module.exports = {
     createBlog: async (req, res, next) => {
         try{
             userId = config.userId;
-            console.log("userid", userId);
             const newBlog = new Blog(req.value.body);
             const user = await User.findById(userId);
-            // console.log(user);
             newBlog.author = user;
             await newBlog.save();
             user.blogs.push(newBlog);

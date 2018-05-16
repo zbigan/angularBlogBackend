@@ -25,11 +25,11 @@ module.exports = {
         }  
     },
 
-    //AUTHENTICATE USER (VALIDATION PENDING)
+    //AUTHENTICATE USER (WITH VALIDATION)
     authenticateUser: async (req, res, next) => {
         try {
-            const password = req.body.password;
-            const email = req.body.email;
+            const password = req.value.body.password;
+            const email = req.value.body.email;
             const userFromDb = await User.find({email});
             if (userFromDb[0]){
                 const match = await bcrypt.compare(password, userFromDb[0].password);
