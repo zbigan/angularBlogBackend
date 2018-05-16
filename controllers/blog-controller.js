@@ -20,8 +20,7 @@ module.exports = {
     //SHOW ROUTE (WITH VALIDATION)
     showBlog: async (req, res, next) => {
         try{
-            // const id = req.params.id; //Tas pats kaip:
-            const { id } = req.value.params;
+            const { id } = req.params;
             const blog = await Blog.findById(id);
             res.status(200).json(blog);
         } catch(err){
@@ -43,23 +42,24 @@ module.exports = {
     },
 
     //DELETE ROUTE (WITH VALIDATION)
-    deleteBlog: (req, res) => {
-        Blog.findOneAndRemove( {_id: req.value.params.id}, (err, deleted) => {
-            if (err){
-            console.log(err);
-            }  else {
-                res.send(deleted);
-            }
-        });
+    deleteBlog: async (req, res) => {
+        try{
+            await Blog.findOneAndRemove( {_id: req.value.params.id});
+            res.status(200).json({success: true});
+        } catch(err){
+            next(err);
+        }
+        
     },
 
     //CREATE BLOG ROUTE (WITH VALIDATION)
     createBlog: async (req, res, next) => {
         try{
             userId = config.userId;
-            
+            console.log("userid", userId);
             const newBlog = new Blog(req.value.body);
             const user = await User.findById(userId);
+            // console.log(user);
             newBlog.author = user;
             await newBlog.save();
             user.blogs.push(newBlog);

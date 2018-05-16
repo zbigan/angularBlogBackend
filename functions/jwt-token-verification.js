@@ -10,7 +10,6 @@ module.exports = {
             if(typeof header === "string" && header.indexOf(" ") > -1) {
                 const array = header.split(" ");
                 const token = array[1];
-                console.log(token);
                 const verified = await jwt.verify(token, jwtSecret);
                 if(verified) {
                     next();

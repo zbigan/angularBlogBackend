@@ -25,20 +25,26 @@ module.exports = {
         }  
     },
 
+    //AUTHENTICATE USER (VALIDATION PENDING)
     authenticateUser: async (req, res, next) => {
         try {
             const password = req.body.password;
             const email = req.body.email;
             const userFromDb = await User.find({email});
-            const match = await bcrypt.compare(password, userFromDb[0].password);
-            if (match) {
-                const token = jwt.sign({name: userFromDb.name, email: userFromDb.email}, jwtSecret);
-                res.status(200).send({
-                    user: {name: userFromDb.name, email: userFromDb.email},
-                    token: token
-                });
+            if (userFromDb[0]){
+                const match = await bcrypt.compare(password, userFromDb[0].password);
+                if (match) {
+                    config.userId = userFromDb[0]._id;
+                    const token = await jwt.sign({name: userFromDb.name, email: userFromDb.email}, jwtSecret);
+                    res.status(200).send({
+                        user: {name: userFromDb.name, email: userFromDb.email},
+                        token: token
+                    });
+                } else {
+                    res.status(401).json("Failed to authorize. Wrong password!");
+                }
             } else {
-                res.status(401).json("Failed to authorize. Wrong password!");
+                res.status(403).json("Failed to authorize. No such user!");
             }
         } catch(err) {
             next(err);
