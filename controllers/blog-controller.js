@@ -8,9 +8,11 @@ mongoose.connect(config.databaseUrl);
 
 module.exports = {
     //INDEX ROUTE
+
     showBlogs: async (req, res, next) => {
         try{
             const blogs = await Blog.find({});
+            // return blogs;
             res.status(200).json(blogs);
         } catch(err) {
             next(err);
@@ -38,18 +40,28 @@ module.exports = {
         } catch(err){
             next(err);
         }
-        
     },
 
     //DELETE ROUTE (WITH VALIDATION)
-    deleteBlog: async (req, res) => {
+    deleteBlog: async (req, res, next) => {
         try{
-            await Blog.findOneAndRemove( {_id: req.value.params.id});
-            res.status(200).json({success: true});
+            const id = req.value.params.id;
+            await Blog.findOne({_id: id}, async (err, blog) => {
+                try{
+                    const authorId = blog.author;
+                    const author = await User.findById(authorId);
+                    const index = author.blogs.indexOf(id);
+                    author.blogs.splice(index, 1);
+                    await author.save();   
+                    await Blog.deleteOne(blog);                 
+                    res.status(200).json({success: true});
+                } catch(err){
+                    next(err);
+                }
+            });
         } catch(err){
             next(err);
         }
-        
     },
 
     //CREATE BLOG ROUTE (WITH VALIDATION)
@@ -59,10 +71,15 @@ module.exports = {
             const newBlog = new Blog(req.value.body);
             const user = await User.findById(userId);
             newBlog.author = user;
-            await newBlog.save();
-            user.blogs.push(newBlog);
-            await user.save();
-            res.status(201).json(newBlog);
+            await newBlog.save(async () => {
+                try {
+                    user.blogs.push(newBlog);
+                    await user.save();
+                    res.status(201).json(newBlog);    
+                } catch(err) {
+                    next(err);
+                }
+            });
         } catch(err){
             next(err);
         }
