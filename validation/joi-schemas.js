@@ -3,7 +3,7 @@ const Joi = require("joi");
 module.exports = {
     joiBlogSchema: Joi.object().keys({
         title: Joi.string().required(),
-        image: Joi.string().regex(/^((https:\/\/www\.)|(http:\/\/www\.)|(www\.)|(https:\/\/)|(http:\/\/))[a-zA-Z0-9._/-]+\.[a-zA-Z.]{2,5}$/),
+        image: Joi.string().regex(/^((https:\/\/www\.)|(http:\/\/www\.)|(www\.)|(https:\/\/)|(http:\/\/))[a-zA-Z0-9._/-]+$/), //\.[a-zA-Z.]{2,5}        
         body: Joi.string()
     }),
 
