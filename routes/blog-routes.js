@@ -9,7 +9,6 @@ const { joiBlogSchema, joiIdSchema } = require("../validation/joi-schemas");
 router.route("/blogs")
     .get(
         blogController.showBlogs
-        // .then(blogs => res.status(200).json(blogs))
     )
     .post(
         jwtMiddleware,

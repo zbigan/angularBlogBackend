@@ -11,7 +11,6 @@ app.use(cors());
 app.use('/', blogRoutes);
 app.use('/', userRoutes);
 
-// app.listen(config.port, config.ip, () => {
 app.listen(config.port, () => {
     console.log("SERVER IS RUNNING on port " + config.port);
 });

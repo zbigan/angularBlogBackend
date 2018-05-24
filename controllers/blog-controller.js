@@ -12,7 +12,6 @@ module.exports = {
     showBlogs: async (req, res, next) => {
         try{
             const blogs = await Blog.find({});
-            // return blogs;
             res.status(200).json(blogs);
         } catch(err) {
             next(err);
